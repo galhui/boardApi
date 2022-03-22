@@ -1,9 +1,11 @@
 http:
-  host: 'localhost'
+  host: localhost
   port: 3000
 
 db:
   mysql:
-    url: 'localhost'
+    url: localhost
     port: 3306
-    database: 'board'
+    username: board_user
+    password: password
+    schema: board

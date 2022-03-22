@@ -1,0 +1,1 @@
+FROM 17-stretch-slim

@@ -12,6 +12,8 @@ export default () => {
         port: parseInt(config.http.host) || 3000,
         database: {
             host: config.db.mysql.url || 'localhost',
+            user: config.db.mysql.username,
+            password: config.db.mysql.password,
             port: config.db.mysql.port || 3306,
             schema: config.db.mysql.database
         }
