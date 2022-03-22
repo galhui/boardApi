@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CommentModule } from './comment/comment.module';
-import { BoardModule } from './board/board.module';
+import { CommentModule } from './service_modules/comment/comment.module';
+import { BoardModule } from './service_modules/board/board.module';
+import { DbModule } from './core/db/db.module';
+import { ConfigLoadModule } from './core/config/config_load.module';
 
 @Module({
-  imports: [CommentModule, BoardModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    // core 
+    DbModule, 
+    ConfigLoadModule,
+
+    // service
+    CommentModule, 
+    BoardModule    
+  ]
 })
 export class AppModule {}
