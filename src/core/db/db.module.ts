@@ -15,8 +15,9 @@ import { createConnection } from 'typeorm';
                 username: configService.get('database.user'),
                 password: configService.get('database.password'),
                 database: configService.get('database.schema'),
-                entities: [__dirname + '../service_modules/**/*.entity{.ts,.js}'],
-                synchronize: false
+                entities: [__dirname + '/../../service_modules/**/*.entity.{ts,js}'],
+                synchronize: false,
+                logging: true
             }),
             connectionFactory: async (options) => {
             const connection = await createConnection(options);

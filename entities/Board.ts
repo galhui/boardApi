@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Comment } from '../../comment/entities/comment.entity'
+import { Comment } from "./Comment";
 
 @Entity("Board", { schema: "board" })
 export class Board {
@@ -27,6 +27,6 @@ export class Board {
   @Column("json", { name: "keyword", nullable: true })
   keyword: object | null;
 
-  @OneToMany(() => Comment, (comment) => comment.board)
+  @OneToMany(() => Comment, (comment) => comment.boardIdx2)
   comments: Comment[];
 }

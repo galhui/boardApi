@@ -3,9 +3,8 @@ import * as yaml from 'js-yaml';
 import { join } from 'path';
 
 export default () => {
-    const appRoot = require('app-root-path');
     const config = yaml.load(
-        readFileSync(join(appRoot.path, 'config/config.yaml'), 'utf8')
+        readFileSync(join(__dirname, '/../../../config/config.yaml'), 'utf8')
     ) as Record<string, any>;
 
     return {
@@ -15,7 +14,7 @@ export default () => {
             user: config.db.mysql.username,
             password: config.db.mysql.password,
             port: config.db.mysql.port || 3306,
-            schema: config.db.mysql.database
+            schema: config.db.mysql.schema
         }
     }
 }
