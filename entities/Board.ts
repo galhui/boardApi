@@ -27,6 +27,9 @@ export class Board {
   @Column("json", { name: "keyword", nullable: true })
   keyword: object | null;
 
+  @Column("tinyint", { name: "isDel", default: () => "'0'" })
+  isDel: number;
+
   @OneToMany(() => Comment, (comment) => comment.boardIdx2)
   comments: Comment[];
 }

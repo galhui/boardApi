@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BoardService } from './board.service';
-import { CreateBoardDto } from './dto/create-board.dto';
-import { UpdateBoardDto } from './dto/update-board.dto';
+import { CreateBoardDto } from './dto/create_board.dto';
+import { FindBoardQuery } from './dto/find_board.query';
+import { UpdateBoardDto } from './dto/update_board.dto';
 
 @ApiTags('board')
 @Controller('board')
@@ -15,22 +16,22 @@ export class BoardController {
   }
 
   @Get()
-  findAll() {
-    return this.boardService.findAll();
+  findAll(@Query() query: FindBoardQuery) {
+    return this.boardService.findAll(query);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.boardService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.boardService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardService.update(+id, updateBoardDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateBoardDto: UpdateBoardDto) {
+    return this.boardService.update(id, updateBoardDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.boardService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.boardService.remove(id);
   }
 }

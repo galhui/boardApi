@@ -4,7 +4,7 @@ import { join } from 'path';
 
 export default () => {
     const config = yaml.load(
-        readFileSync(join(__dirname, '/../../../config/config.yaml'), 'utf8')
+        readFileSync(join(__dirname, '../../../config/config.yaml'), 'utf8')
     ) as Record<string, any>;
 
     return {
