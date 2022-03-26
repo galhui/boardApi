@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Query 
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { BoardService } from './board.service';
 import { CreateBoardDto } from './dto/create_board.dto';
+import { DeleteBoardBody } from './dto/delete_board.body';
 import { DetailBoardDto } from './dto/detail_board.dto';
 import { FindBoardQuery } from './dto/find_board.query';
 import { FindBoardResponse } from './dto/find_board.response';
@@ -42,7 +43,7 @@ export class BoardController {
 
   @ApiOperation({ summary: '게시글 삭제 API'})
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.boardService.remove(id);
+  remove(@Param('id', ParseIntPipe) id: number, @Body() body: DeleteBoardBody) {
+    return this.boardService.remove(id, body);
   }
 }

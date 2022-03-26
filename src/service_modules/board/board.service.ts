@@ -5,6 +5,7 @@ import { NotifyType } from 'service_modules/notice/enum/notice.enum';
 import { NoticeService } from 'service_modules/notice/notice.service';
 import { Propagation, Transactional } from 'typeorm-transactional-cls-hooked';
 import { CreateBoardDto } from './dto/create_board.dto';
+import { DeleteBoardBody } from './dto/delete_board.body';
 import { DetailBoardDto } from './dto/detail_board.dto';
 import { FindBoardQuery } from './dto/find_board.query';
 import { UpdateBoardDto } from './dto/update_board.dto';
@@ -61,14 +62,19 @@ export class BoardService {
       throw new UnauthorizedException('사용자 정보가 틀립니다.')
     }
 
-    // todo. board title, contents에 대해 keyword를 추출해서 갱신한다
     await this.boardRepository.updateBoard(id, plainToClass(Board, { ...dto }))
 
-    // questions. 알림을 다시 보낼 필요가 있을까?
     return await this.findOne(id)
   }
 
-  async remove(id: number) {
+  async remove(id: number, body: DeleteBoardBody) {
+    const board = await this.boardRepository.selectBoard(id)
+
+    if (!board) throw new BadRequestException('삭제된 게시글을 수정하려 합니다.')
+    if (board.userName !== body.userName || board.password !== body.password) {
+      throw new UnauthorizedException('사용자 정보가 틀립니다.')
+    }
+
     await this.boardRepository.deleteBoard(id);
   }
 }
