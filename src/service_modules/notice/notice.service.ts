@@ -17,6 +17,8 @@ export class NoticeService {
 
     @Transactional({ propagation: Propagation.REQUIRES_NEW})
     async sendNotify(type: NotifyType, keywords: string[],  boardIdx:number, commentIdx?:number) {
+        if (keywords.length === 0) return
+        
         const board = await this.boardRepository.selectBoard(boardIdx)
         const users = await this.keywordRepository.selectUserByKeyword(keywords)
 
