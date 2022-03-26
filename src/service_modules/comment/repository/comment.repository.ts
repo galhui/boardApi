@@ -41,8 +41,7 @@ export class CommentRepository extends BaseRepository<Comment> {
     async selectComments(query: { page: number, limit: number, boardIdx: number }) {
         const queryBuilder = this.createQueryBuilder()
             .where('boardIdx = :boardIdx', { boardIdx: query.boardIdx})
-            .orderBy('depth', 'ASC')
-            .addOrderBy('sort', 'ASC')
+            .orderBy('path', 'ASC')
 
         return await paginate(queryBuilder,{
             limit: query.limit,

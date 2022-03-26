@@ -28,7 +28,7 @@ export class CommentService {
     }
 
     interface CommentBaseInfo {
-      depth: number,
+      path: string,
       sort: number
     }
 
@@ -40,11 +40,11 @@ export class CommentService {
     }
 
     const basicInfo: CommentBaseInfo = {
-      depth: depthComment && dto.parentIdx ? depthComment.depth + 1 : 0,
-      sort: depthComment && depthComment.comments?.length > 0 ? depthComment.comments[0].sort + 1 :  // 자식커맨트 가장 마지막 커맨트의 sort + 1
-        (depthComment && !dto.parentIdx ? depthComment.sort + 1 : 1)         // 게시판 커맨트의 sort + 1, 커맨트 없으면 1
+      sort: depthComment && depthComment.comments?.length > 0 ? depthComment.comments[0].sort + 1 :   // 자식커맨트 가장 마지막 커맨트의 sort + 1
+            (depthComment && !dto.parentIdx ? depthComment.sort + 1 : 1),                             // 게시판 커맨트의 sort + 1, 커맨트 없으면 1
+      path: ''
     }
-    
+    basicInfo.path = depthComment && dto.parentIdx ? depthComment.path + '-' + basicInfo.sort : basicInfo.sort.toString();
     const comment = plainToClass(Comment, { 
       ...basicInfo, 
       ...dto

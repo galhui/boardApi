@@ -22,8 +22,8 @@ export class Comment {
   @Column("int", { name: "parentIdx", nullable: true })
   parentIdx: number | null;
 
-  @Column("int", { name: "depth" })
-  depth: number;
+  @Column("varchar", { name: "path", length: 100 })
+  path: string;
 
   @Column("int", { name: "sort" })
   sort: number;
