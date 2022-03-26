@@ -15,8 +15,8 @@ export class BoardController {
   @ApiOperation({ summary: '게시글 작성 API'})
   @ApiOkResponse({ type: DetailBoardDto })
   @Post()
-  create(@Body() createBoardDto: CreateBoardDto) {
-    return this.boardService.create(createBoardDto);
+  create(@Body() dto: CreateBoardDto) {
+    return this.boardService.create(dto);
   }
 
   @ApiOperation({ summary: '게시글 목록 API'})
@@ -36,8 +36,8 @@ export class BoardController {
   @ApiOperation({ summary: '게시글 수정 API'})
   @ApiOkResponse({ type: DetailBoardDto })
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() updateBoardDto: UpdateBoardDto) {
-    return this.boardService.update(id, updateBoardDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateBoardDto) {
+    return this.boardService.update(id, dto);
   }
 
   @ApiOperation({ summary: '게시글 삭제 API'})

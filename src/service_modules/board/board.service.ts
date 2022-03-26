@@ -20,8 +20,10 @@ export class BoardService {
 
   @Transactional({propagation: Propagation.REQUIRES_NEW })
   async create(dto: CreateBoardDto) {
+    // todo. board title, contents에 대해 keyword를 추출해서 함께 저장해준다.
     const result = await this.boardRepository.insertBoard(plainToClass(Board, { ...dto }))
 
+    // todo. notice service를 호출하여 keyword를 등록한 사용자들에게 알림을 보낸다
     return await this.findOne(result.identifiers[0].idx)
   }
 
@@ -47,7 +49,11 @@ export class BoardService {
     if (board.userName !== dto.userName || board.password !== dto.password) {
       throw new UnauthorizedException('사용자 정보가 틀립니다.')
     }
+
+    // todo. board title, contents에 대해 keyword를 추출해서 갱신한다
     await this.boardRepository.updateBoard(id, plainToClass(Board, { ...dto }))
+
+    // questions. 알림을 다시 보낼 필요가 있을까?
     return await this.findOne(id)
   }
 

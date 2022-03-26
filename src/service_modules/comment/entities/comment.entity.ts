@@ -7,6 +7,9 @@ import {
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
+    Tree,
+    TreeChildren,
+    TreeParent,
   } from "typeorm";
   
   
