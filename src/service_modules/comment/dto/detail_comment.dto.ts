@@ -1,6 +1,6 @@
-import { ApiProperty, ApiPropertyOptional, OmitType } from "@nestjs/swagger"
+import { ApiProperty, OmitType } from "@nestjs/swagger"
 import { Expose } from "class-transformer"
-import { IsDate, IsNumber } from "class-validator"
+import { IsDate, IsNumber, IsString } from "class-validator"
 import { CreateCommentDto } from "./create_comment.dto"
 
 export class DetailCommnetDto extends OmitType(CreateCommentDto, ['password'] as const) {
@@ -15,12 +15,7 @@ export class DetailCommnetDto extends OmitType(CreateCommentDto, ['password'] as
     regDate: Date
 
     @ApiProperty()
-    @IsNumber()
+    @IsString()
     @Expose()
-    depth: number
-    
-    @ApiProperty()
-    @IsNumber()
-    @Expose()
-    sort: number
+    path: string
 }
