@@ -2,6 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { plainToClassExclude } from 'core/util/convert.util';
 import { BoardRepository } from 'service_modules/board/repository/board.repository';
+import { NotifyType } from 'service_modules/notice/enum/notice.enum';
+import { NoticeService } from 'service_modules/notice/notice.service';
 import { Propagation, Transactional } from 'typeorm-transactional-cls-hooked';
 import { CreateCommentDto } from './dto/create_comment.dto';
 import { DetailCommnetDto } from './dto/detail_comment.dto';
@@ -13,8 +15,9 @@ import { CommentRepository } from './repository/comment.repository';
 export class CommentService {
 
   constructor(
-    readonly boardRepository: BoardRepository,
-    readonly commentRepository: CommentRepository
+    private readonly boardRepository: BoardRepository,
+    private readonly commentRepository: CommentRepository,
+    private readonly noticeService: NoticeService
   ) {
 
   }
@@ -51,6 +54,13 @@ export class CommentService {
     })
 
     const result = await this.commentRepository.insertCommnet(comment);
+    const commentIdx = result.identifiers[0].idx
+    const mecab = require('mecab-ya');
+
+    mecab.nouns(dto.contents, async (err:any, items:string[]) => {
+      await this.commentRepository.updateCommentKeyword(commentIdx, items)
+      await this.noticeService.sendNotify(NotifyType.COMMENT, items, dto.boardIdx, commentIdx)
+    })
 
     return await this.findOne(result.identifiers[0].idx)
   }

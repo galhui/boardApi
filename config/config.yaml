@@ -4,7 +4,7 @@ http:
 
 db:
   mysql:
-    url: localhost
+    url: mysql_service
     port: 3306
     username: board_user
     password: password

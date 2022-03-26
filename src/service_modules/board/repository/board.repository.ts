@@ -27,7 +27,7 @@ export class BoardRepository extends BaseRepository<Board> {
             .where('isDel = 0')
         
         if (query.title) {
-            queryBuilder.andWhere('title like "%:title%"', { title : query.title})
+            queryBuilder.andWhere('title like :title', { title : `%${query.title}%` })
         }
 
         if (query.userName) {
@@ -52,6 +52,14 @@ export class BoardRepository extends BaseRepository<Board> {
         return await this.createQueryBuilder()
             .update()
             .set({ contents: board.contents, title: board.title })
+            .where('idx = :idx', { idx: idx })
+            .execute()
+    }
+
+    async updateBoardKeyword (idx: number, keywords: string[]) {
+        return await this.createQueryBuilder()
+            .update()
+            .set({ keyword: { key : keywords } })
             .where('idx = :idx', { idx: idx })
             .execute()
     }

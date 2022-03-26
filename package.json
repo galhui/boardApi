@@ -33,6 +33,7 @@
     "class-validator": "^0.12.2",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
+    "mecab-ya": "^0.1.1",
     "mysql2": "^2.3.3",
     "nestjs-typeorm-paginate": "^3.2.0-alpha",
     "reflect-metadata": "^0.1.13",

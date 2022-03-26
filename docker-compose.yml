@@ -13,12 +13,19 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: board
     command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-  # api:
-  #   build:
-  #     dockerfile: ./docker/api.dockerfile
-  #   ports:
-  #     - "3000:3000"
-  #   links:
-  #     - mysql
+      - --character-set-server=utf8
+      - --collation-server=utf8_unicode_ci
+    networks:
+      - db-net
+      
+  api:
+    build:
+      dockerfile: ./docker/api.dockerfile
+    ports:
+      - "8080:3000"
+    depends_on:
+      - mysql
+    networks:
+      - db-net
+networks:
+  db-net:

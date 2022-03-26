@@ -48,4 +48,12 @@ export class CommentRepository extends BaseRepository<Comment> {
             page: query.page
         })
     }
+
+    async updateCommentKeyword (idx: number, keywords: string[]) {
+        return await this.createQueryBuilder()
+            .update()
+            .set({ keyword: { key : keywords } })
+            .where('idx = :idx', { idx: idx })
+            .execute()
+    }
 }
